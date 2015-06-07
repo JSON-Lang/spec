@@ -32,7 +32,7 @@
 		}
 	},
 	"points": {
-		"header_login_success": "$.strings.welcome",
+		"header_login_success": {"$ref": "#/strings/welcome"},
 		"login_welcome_subheader": [
 			{
 				"language": "en-US",
@@ -40,12 +40,14 @@
 			},
 			{
 				"language": "fr-FR",
-				"singular": "Bonjour la chat!",
-				"plural": "Bonjour les chats!"
+				"text": "Bonjour la chat!",
+				"contexts": {
+					"plural": "Bonjour les chats!"
+				}
 			}
 		],
 		"registration": {
-			"success": "$.strings.success"
+			"success": {"$ref": "#/strings/success"}
 		}
 	}
 }

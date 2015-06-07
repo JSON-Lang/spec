@@ -108,6 +108,7 @@
                     "$ref": "#/definitions/Translation"
                 },
                 {
+                    "description": "String object reference. JSON-Lang parser MUST automatically take the related language translation of this String object. If this Context is in tr-TR `language`, then the parser must retrieve tr-TR Translation of the String.",
                     "type": "object",
                     "properties": {
                         "$ref": {
