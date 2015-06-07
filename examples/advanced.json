@@ -1,0 +1,139 @@
+{
+	"encoding": "utf8",
+	"comments": [
+		{
+			"text": "This is my comment",
+			"author": "Oytun Tez",
+			"time": "2015-06-07T15:51:41.297Z"
+		}
+	],
+	"variables": {
+		"site_name": {
+			"type": "string"
+		},
+		"current_year": {
+			"type": "integer"
+		}
+	},
+	"authors": [
+		{
+			"name": "Oytun Tez",
+			"email": "oytun@motaword.com",
+			"last_modification": "2015-06-07T15:51:41.297Z"
+		}
+	],
+	"languages": {
+		"source": "en-US",
+		"targets": [
+			"en-US", "fr-FR", "tr-TR"
+		]
+	},
+	"strings": {
+		"hello": {
+			"translations": [
+				{
+					"language": "en-US",
+					"text": "Hello people!",
+					"alternatives": [
+						{
+							"text": "Hello guy!",
+							"contexts": {
+								"plural": { 
+									"text": "Hello guys!"
+								}
+							},
+							"time": "2015-06-07T15:51:41.297Z"
+						}
+					],
+					"author": {
+						"$ref": "#/authors/0",
+					}
+				},
+				{
+					"language": "fr-FR",
+					"text": "Bonjour l'homme!",
+					"contexts": {
+						"plural": {
+							"text": "Bonjour les gens, en __current_year__!"
+						}
+					},
+					"comments": [
+						{
+							"text": "This is my comment for this specific French translation.",
+							"author": "Oytun Tez",
+							"time": "2015-06-07T15:51:41.297Z"
+						}
+					],
+					"time": "2015-06-07T15:51:41.297Z"
+				},
+				{
+					"language": "tr-TR",
+					"status": "final",
+					"text": "Merhaba __first_name__!",
+					"contexts": {
+						"sincere": {
+							"text": "Selam __first_name__"
+						},
+						"morning": {
+							"$ref": {
+								"$ref": "#/strings/hello_morning"
+							}
+						}
+					}
+				}
+			],
+			"variables": {
+				"first_name": {
+					"type": "string"
+				}
+			},
+			"comments": [
+				{
+					"text": "This is my comment for this specific string",
+					"author": "Oytun Tez",
+					"time": "2015-06-07T15:51:41.297Z"
+				}
+			]
+		},
+		"hello_morning": [
+			{
+				"language": "tr-TR",
+				"text": "Gunaydin insan!",
+				"contexts": {
+					"plural": {
+						"text": "Gunaydin insanlar!"
+					}
+				}
+			}
+		],
+		"success": [
+			{
+				"language": "en-US",
+				"text": "Congratulations! Thanks for registering."
+			}
+		]
+	},
+	"points": {
+		"login_welcome_header": {
+			"$ref": { 
+				"$ref": "#/strings/hello"
+			}
+		},
+		"login_welcome_subheader": [
+			{
+				"language": "en-US",
+				"text": "Hello cats!"
+			},
+			{
+				"language": "fr-FR",
+				"singular": "Bonjour la chat!",
+				"plural": "Bonjour les chats!"
+			}
+		],
+		"registration": {
+			"success": {
+				"$ref": "#/strings/success"
+			}
+		}
+	}
+}

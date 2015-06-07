@@ -1,0 +1,51 @@
+{
+	"encoding": "utf8",
+	"strings": {
+		"welcome": {
+			"translations": [
+				{
+					"language": "en-US",
+					"text": "Welcome home, __first_name__!"
+				},
+				{
+					"language": "tr-TR",
+					"text": "Tekrar hoşgeldin, __first_name__!"
+				}
+			],
+			"variables": {
+				"first_name": {
+					"type": "string"
+				}
+			}
+		},
+		"success": {
+			"translations": [
+				{
+					"language": "en-US",
+					"text": "Congratulations, everything went well!"
+				},
+				{
+					"language": "tr-TR",
+					"text": "Tebrikler, her şey yolunda!"
+				}
+			]
+		}
+	},
+	"points": {
+		"header_login_success": "$.strings.welcome",
+		"login_welcome_subheader": [
+			{
+				"language": "en-US",
+				"text": "Hello cats!"
+			},
+			{
+				"language": "fr-FR",
+				"singular": "Bonjour la chat!",
+				"plural": "Bonjour les chats!"
+			}
+		],
+		"registration": {
+			"success": "$.strings.success"
+		}
+	}
+}
