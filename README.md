@@ -3,6 +3,9 @@
 *Quick introductory examples are below.*
 **This document is to be completed.**
 ## 	Introduction
+JSON-Lang is a JSON sub-specification designed to provide a global Internationalization exchange file, especially for programming environments rather than documents. Ideally, you would have one unified format for all of your internalization, localization configuration and translations, which you could move between platforms with no touch. If the platform or environment has a JSON-Lang parser, you wouldn't need any modification on the file to use it throughout your system.
+
+You can consider this specification as a highly thin, programming oriented JSON version of XLIFF standard.
 ##	Definitions
 ##	Behaviors
 ###	Points and Strings
