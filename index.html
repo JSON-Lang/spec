@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>JSON-Lang Specification by JSON-Lang</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">JSON-Lang Specification</h1>
+      <h2 class="project-tagline">JSON-Lang specification and schemas: localization file exchange format.</h2>
+      <a href="https://github.com/JSON-Lang/spec" class="btn">View on GitHub</a>
+      <a href="https://github.com/JSON-Lang/spec/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/JSON-Lang/spec/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h2>
+<a id="go-to-github-repository" class="anchor" href="#go-to-github-repository" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/JSON-Lang/spec">Go to GitHub repository</a>
+</h2>
+
+<h1>
+<a id="json-lang-specification" class="anchor" href="#json-lang-specification" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON-Lang Specification</h1>
+
+<p><em>For JSON Schema definition of the JSON-Lang specification, go to schemas/latest/schema.json file.</em>
+<em>Quick introductory examples are below.</em>
+<strong>This document is to be completed.</strong></p>
+
+<h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>JSON-Lang is a JSON sub-specification designed to provide a global Internationalization exchange file, especially for programming environments rather than documents. Ideally, you would have one unified format for all of your internalization, localization configuration and translations, which you could move between platforms with no touch. If the platform or environment has a JSON-Lang parser, you wouldn't need any modification on the file to use it throughout your system.</p>
+
+<p>You can consider this specification as a highly thin, programming oriented JSON version of XLIFF standard.</p>
+
+<h2>
+<a id="definitions" class="anchor" href="#definitions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Definitions</h2>
+
+<h2>
+<a id="behaviors" class="anchor" href="#behaviors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Behaviors</h2>
+
+<h3>
+<a id="points-and-strings" class="anchor" href="#points-and-strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Points and Strings</h3>
+
+<h3>
+<a id="variables" class="anchor" href="#variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Variables</h3>
+
+<h3>
+<a id="contexts" class="anchor" href="#contexts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contexts</h3>
+
+<h3>
+<a id="meta-data" class="anchor" href="#meta-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Meta Data</h3>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<ol>
+<li>Basic language file definition</li>
+</ol>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>encoding<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>utf8<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>strings<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>welcome<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Welcome home, __first_name__!<span class="pl-pds">"</span></span>
+                },
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>tr-TR<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Tekrar hoşgeldin, __first_name__!<span class="pl-pds">"</span></span>
+                }
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>variables<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>first_name<span class="pl-pds">"</span></span>: {
+                    <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>string<span class="pl-pds">"</span></span>
+                }
+            }
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Congratulations, everything went well!<span class="pl-pds">"</span></span>
+                },
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>tr-TR<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Tebrikler, her şey yolunda!<span class="pl-pds">"</span></span>
+                }
+            ]
+        }
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>points<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>header_login_success<span class="pl-pds">"</span></span>: {<span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/strings/welcome<span class="pl-pds">"</span></span>},
+        <span class="pl-s"><span class="pl-pds">"</span>login_welcome_subheader<span class="pl-pds">"</span></span>: [
+            {
+                <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello cats!<span class="pl-pds">"</span></span>
+            },
+            {
+                <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>fr-FR<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour la chat!<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+                    <span class="pl-s"><span class="pl-pds">"</span>plural<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour les chats!<span class="pl-pds">"</span></span>
+                }
+            }
+        ],
+        <span class="pl-s"><span class="pl-pds">"</span>registration<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>: {<span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/strings/success<span class="pl-pds">"</span></span>}
+        }
+    }
+}</pre></div>
+
+<ol>
+<li>Advanced language file definition</li>
+</ol>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>encoding<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>utf8<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>comments<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>This is my comment for the whole document.<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+            }
+        }
+    ],
+    <span class="pl-s"><span class="pl-pds">"</span>variables<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>site_name<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>string<span class="pl-pds">"</span></span>
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>current_year<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>integer<span class="pl-pds">"</span></span>
+        }
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>authors<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Oytun Tez<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>oytun@motaword.com<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>last_modification<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+        }
+    ],
+    <span class="pl-s"><span class="pl-pds">"</span>languages<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>source<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>targets<span class="pl-pds">"</span></span>: [
+            <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>fr-FR<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>tr-TR<span class="pl-pds">"</span></span>
+        ]
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>strings<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello people!<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>alternatives<span class="pl-pds">"</span></span>: [
+                        {
+                            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello guy!<span class="pl-pds">"</span></span>,
+                            <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+                                <span class="pl-s"><span class="pl-pds">"</span>plural<span class="pl-pds">"</span></span>: {
+                                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello guys!<span class="pl-pds">"</span></span>
+                                }
+                            },
+                            <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+                        }
+                    ],
+                    <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                        <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+                    }
+                },
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>fr-FR<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour l'homme!<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+                        <span class="pl-s"><span class="pl-pds">"</span>plural<span class="pl-pds">"</span></span>: {
+                            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour les gens, en __current_year__!<span class="pl-pds">"</span></span>
+                        }
+                    },
+                    <span class="pl-s"><span class="pl-pds">"</span>comments<span class="pl-pds">"</span></span>: [
+                        {
+                            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>This is my comment for this specific French translation.<span class="pl-pds">"</span></span>,
+                            <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>,
+                            <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+                            }
+                        }
+                    ],
+                    <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+                },
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>tr-TR<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>final<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Merhaba __first_name__!<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+                        <span class="pl-s"><span class="pl-pds">"</span>sincere<span class="pl-pds">"</span></span>: {
+                            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Selam __first_name__<span class="pl-pds">"</span></span>
+                        },
+                        <span class="pl-s"><span class="pl-pds">"</span>morning<span class="pl-pds">"</span></span>: {
+                            <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/strings/hello_morning<span class="pl-pds">"</span></span>
+                        }
+                    }
+                }
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>variables<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>first_name<span class="pl-pds">"</span></span>: {
+                    <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>string<span class="pl-pds">"</span></span>
+                }
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>comments<span class="pl-pds">"</span></span>: [
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>This is my comment for this specific string.<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                        <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+                    },
+                    <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+                }
+            ]
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>hello_morning<span class="pl-pds">"</span></span>: [
+            {
+                <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>tr-TR<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Gunaydin insan!<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+                    <span class="pl-s"><span class="pl-pds">"</span>plural<span class="pl-pds">"</span></span>: {
+                        <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Gunaydin insanlar!<span class="pl-pds">"</span></span>
+                    }
+                }
+            }
+        ],
+        <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>: [
+            {
+                <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Congratulations! Thanks for registering.<span class="pl-pds">"</span></span>
+            }
+        ]
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>points<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>login_welcome_header<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: { 
+                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/strings/hello<span class="pl-pds">"</span></span>
+            }
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>login_welcome_subheader<span class="pl-pds">"</span></span>: [
+            {
+                <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello cats!<span class="pl-pds">"</span></span>
+            },
+            {
+                <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>fr-FR<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour la chat!<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour les chats!<span class="pl-pds">"</span></span>
+                }
+            }
+        ],
+        <span class="pl-s"><span class="pl-pds">"</span>registration<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>success<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/strings/success<span class="pl-pds">"</span></span>
+            }
+        }
+    }
+}</pre></div>
+
+<h2>
+<a id="tools" class="anchor" href="#tools" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tools</h2>
+
+<h2>
+<a id="support" class="anchor" href="#support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support</h2>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/JSON-Lang/spec">JSON-Lang Specification</a> is maintained by <a href="https://github.com/JSON-Lang">JSON-Lang</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
