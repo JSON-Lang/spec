@@ -46,7 +46,7 @@
 						}
 					],
 					"author": {
-						"$ref": "#/authors/0",
+						"$ref": "#/authors/0"
 					}
 				},
 				{
