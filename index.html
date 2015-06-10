@@ -19,11 +19,7 @@
     </section>
 
     <section class="main-content">
-      <h2>
-<a id="go-to-github-repository" class="anchor" href="#go-to-github-repository" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/JSON-Lang/spec">Go to GitHub repository</a>
-</h2>
-
-<h1>
+      <h1>
 <a id="json-lang-specification" class="anchor" href="#json-lang-specification" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON-Lang Specification</h1>
 
 <p><em>For JSON Schema definition of the JSON-Lang specification, go to schemas/latest/schema.json file.</em>
@@ -40,6 +36,353 @@
 <h2>
 <a id="definitions" class="anchor" href="#definitions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Definitions</h2>
 
+<h4>
+<a id="strings" class="anchor" href="#strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Strings</h4>
+
+<p>Strings are unique, multilingual text pieces. JSON-Lang does not come with a "source text &gt; translation" relation, but instead, every string contains multilingual content.</p>
+
+<p>Translations of a String is listed as an array under <code>translations</code> key. If you have specific variables (that are supposed to be imported from an external source) for a String, you can put them under <code>variables</code> key.</p>
+
+<p>Structure of a String object follows this schema:</p>
+
+<pre><code>StringIDValue: {
+    "translations": [TranslationObject],
+    "variables": {
+        VariableIDValue: {
+            "type": VariableTypeValue
+        }
+    },
+    "comments": [CommentObject]
+}
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Property name</th>
+<th>Is required?</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>translations</td>
+<td>yes</td>
+<td>Array of Translation objects.</td>
+</tr>
+<tr>
+<td>variables</td>
+<td>no</td>
+<td>A list of variables in a key-value fashion. Value must be a Variable object.</td>
+</tr>
+<tr>
+<td>comments</td>
+<td>no</td>
+<td>An array of Comment objects.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Below is a basic example of a String object.</p>
+
+<div class="highlight highlight-json"><pre><span class="pl-s"><span class="pl-pds">"</span>welcome<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Welcome home, __first_name__!<span class="pl-pds">"</span></span>
+        },
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>tr-TR<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Tekrar hoşgeldin, __first_name__!<span class="pl-pds">"</span></span>
+        }
+    ],
+    <span class="pl-s"><span class="pl-pds">"</span>variables<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>first_name<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>string<span class="pl-pds">"</span></span>
+        }
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>comments<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>This is my comment for this specific string.<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+        }
+    ]
+}</pre></div>
+
+<h4>
+<a id="translations" class="anchor" href="#translations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Translations</h4>
+
+<p>A Translation object is the representation of a String in a specific language. JSON-Lang does not come with a "source &gt; translation" relation. Instead, the content in different languages (including the one in "source language") are all represented in the same way, as a Translation object.</p>
+
+<p>Translation object can hold these values:</p>
+
+<table>
+<thead>
+<tr>
+<th>Property name</th>
+<th>Is required?</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>language</td>
+<td>yes</td>
+<td>Language code that follows ISO 639-1 standard. Example: en-US, tr, fr, zh-TW.</td>
+</tr>
+<tr>
+<td>text</td>
+<td>yes</td>
+<td>Content of this translation. If a <code>context</code> is specified, this value is considered as "singular" context.</td>
+</tr>
+<tr>
+<td>contexts</td>
+<td>no</td>
+<td>A list of contextual translation as a key-value list. Value must be a Translation object or a JSONPath to a String object.</td>
+</tr>
+<tr>
+<td>author</td>
+<td>no</td>
+<td>An Author object or a JSONPath to an Author object.</td>
+</tr>
+<tr>
+<td>time</td>
+<td>no</td>
+<td>Date value as defined in RFC 3339, section 5.6.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>no</td>
+<td>One of the following: <code>initial</code>, <code>translated</code>, <code>reviewed</code>, <code>final</code>
+</td>
+</tr>
+<tr>
+<td>comments</td>
+<td>no</td>
+<td>An array of Comment objects.</td>
+</tr>
+<tr>
+<td>alternatives</td>
+<td>no</td>
+<td>An array of Translation objects. This is to keep a list of previous or alternative versions of this Translation. This value should not perceived as usable value.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Basic example:</p>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Welcome back, __first_name__!<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<p>Advanced example:</p>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>fr-FR<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour l'homme!<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>plural<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour les gens, en __current_year__!<span class="pl-pds">"</span></span>
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>sincere<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour mon cher, __first_name__<span class="pl-pds">"</span></span>
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>morning<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/strings/hello_morning<span class="pl-pds">"</span></span>
+        }
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>comments<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>This is my comment for this specific French translation.<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+            }
+        }
+    ],
+    <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>alternatives<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello guy!<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>plural<span class="pl-pds">"</span></span>: {
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello guys!<span class="pl-pds">"</span></span>
+                }
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+        }
+    ],
+}</pre></div>
+
+<h4>
+<a id="language-codes" class="anchor" href="#language-codes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Language codes</h4>
+
+<p>All language codes must follow ISO 639-1 standard. When required, append the locale code as well: <code>pt-BR</code>.</p>
+
+<h4>
+<a id="contexts" class="anchor" href="#contexts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contexts</h4>
+
+<p>Contexts are variations of translations in different contexts. For example, a translation can have a singular form, which is specified in <code>text</code> value and various contextual translations such as <code>plural</code>, <code>female</code>, <code>male</code> forms. As languages and technical needs can be highly various, unifying them under contexts is providing infinite opportunities for different use cases. You can, for example, have a base string "Good day at MotaWord!" and a couple of other contexts such as "Good morning at MotaWord!", "Good night at MotaWord!", "Good Sunday at MotaWord!".</p>
+
+<p><code>contexts</code> value of a Translation object accepts Translation objects with context name as the key.</p>
+
+<p>JSON-Lang provides default contexts for ease of use and standardization and they should be handled accordingly by parsers. These are:</p>
+
+<table>
+<thead>
+<tr>
+<th>Context name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>plural</td>
+<td>Plural form of the Translation. A JSON-Lang parser must return this value when the given numeric condition is bigger than 1 or the specified context is <code>plural</code>.</td>
+</tr>
+<tr>
+<td>plural_x</td>
+<td>Where <code>x</code> is an <code>integer</code>. Specific plural form of the Translation for conditions where the value is exactly <code>x</code>. A JSON-Lang parser must return this value when the given numeric condition is exactly <code>x</code>. The same format can be formed for all numeric values: <code>plural_2</code>, <code>plural_3</code>, <code>plural_4</code>, <code>plural_5</code>. This is especially useful in languages such as Russian.</td>
+</tr>
+<tr>
+<td>plural&gt;x</td>
+<td>Where <code>x</code> is an <code>integer</code>. Specific plural form of the Translation for conditions where the value is bigger than <code>x</code>. A JSON-Lang parser must return this value when the given numeric consition is bigger than <code>x</code>. The same format can be formed for all numeric values: <code>plural&gt;2</code>, <code>plural&gt;3</code>, <code>plural&gt;4</code> etc.</td>
+</tr>
+<tr>
+<td>female</td>
+<td>Female form of the Translation.</td>
+</tr>
+<tr>
+<td>male</td>
+<td>Male form of the Translation.</td>
+</tr>
+</tbody>
+</table>
+
+<p>The suggested way to provide the condition for contexts is along these lines:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-c">// This is a pseudo code.</span>
+jsonLang.get(<span class="pl-s"><span class="pl-pds">'</span>welcome<span class="pl-pds">'</span></span>, <span class="pl-c1">3</span>); <span class="pl-c">// returns one of `plural_3`, `plural&gt;2`, `plural` contexts in this order. If not, falls back to normalized value, `text` property of the Translation object.</span>
+jsonLang.get(<span class="pl-s"><span class="pl-pds">'</span>welcome<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>female<span class="pl-pds">'</span></span>); <span class="pl-c">// all other contexts are specified by their name.</span></pre></div>
+
+<p>Example:</p>
+
+<div class="highlight highlight-json"><pre><span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>plural<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour les gens, en __current_year__!<span class="pl-pds">"</span></span>
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>sincere<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour mon cher, __first_name__<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+        },
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>morning<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/strings/hello_morning<span class="pl-pds">"</span></span>
+    }
+}</pre></div>
+
+<p><strong>Note:</strong> While contexts accept Translation objects or references to Translation objects, <code>language</code> property is not required. The Translation object they belong to defines the language of the Translation.</p>
+
+<h4>
+<a id="variables" class="anchor" href="#variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Variables</h4>
+
+<p>You can easily place a dynamic value in your strings by following this format: <code>__variable_name__</code>. If you provide <code>variable_name</code> parameter on your call to the JSON-Lang parser, this syntax will be replaced with the actual value.</p>
+
+<p><code>Variables</code> schema, on the other hand, defines a list of dynamic parameters accepted and their valid formats. They are basically validation rules for the variables used in Translation values. When a JSON-Parser receives a variable parameter, it should validate its format against variable's <code>type</code>, if specified. Otherwise, the parser should replace all of the provided variables regardless.</p>
+
+<p>Variable validations have two scopes: a String object and document. A variable definition in a String object can override the one in the document scope.</p>
+
+<p>Variable validation rules accept the following options:
+| Property name | Required | Description |
+|---------------|----------|-------------|
+| type | yes | Type of the variable. See the Variable Types and Formats table below. |
+| format | no | Format of the variable. A variable can be of a type and the format specifies the presentation and format of that type. Example: type = string, format = date-time. See the Variable Types and Formats table below. |</p>
+
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>format</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>array</td>
+<td>array</td>
+<td>A JSON array.</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>boolean</td>
+<td>A JSON boolean.</td>
+</tr>
+<tr>
+<td>integer</td>
+<td>integer</td>
+<td>A JSON number without a fraction or exponent part.</td>
+</tr>
+<tr>
+<td>number</td>
+<td>number</td>
+<td>Any JSON number. Number includes integer.</td>
+</tr>
+<tr>
+<td>null</td>
+<td>null</td>
+<td>The JSON null value.</td>
+</tr>
+<tr>
+<td>object</td>
+<td>object</td>
+<td>A JSON object.</td>
+</tr>
+<tr>
+<td>string</td>
+<td>string</td>
+<td>A JSON string.</td>
+</tr>
+<tr>
+<td>string</td>
+<td>date-time</td>
+<td>A date time string defined by RFC 3339, section 5.6.</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>This table is not complete. *</li>
+</ul>
+
+<p>String variable rule:</p>
+
+<div class="highlight highlight-json"><pre><span class="pl-s"><span class="pl-pds">"</span>hello_morning<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Good morning, __first_name! Today is __date__.<span class="pl-pds">"</span></span>
+        }
+    ],
+    <span class="pl-s"><span class="pl-pds">"</span>variables<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>first_name<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>string<span class="pl-pds">"</span></span>
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>string<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>format<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>date-time<span class="pl-pds">"</span></span>
+        }
+    }
+}</pre></div>
+
 <h2>
 <a id="behaviors" class="anchor" href="#behaviors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Behaviors</h2>
 
@@ -47,10 +390,10 @@
 <a id="points-and-strings" class="anchor" href="#points-and-strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Points and Strings</h3>
 
 <h3>
-<a id="variables" class="anchor" href="#variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Variables</h3>
+<a id="variables-1" class="anchor" href="#variables-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Variables</h3>
 
 <h3>
-<a id="contexts" class="anchor" href="#contexts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contexts</h3>
+<a id="contexts-1" class="anchor" href="#contexts-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contexts</h3>
 
 <h3>
 <a id="meta-data" class="anchor" href="#meta-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Meta Data</h3>
