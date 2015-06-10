@@ -181,6 +181,7 @@ You can easily place a dynamic value in your strings by following this format: `
 Variable validations have two scopes: a String object and document. A variable definition in a String object can override the one in the document scope.
 
 Variable validation rules accept the following options:
+
 | Property name | Required | Description |
 |---------------|----------|-------------|
 | type | yes | Type of the variable. See the Variable Types and Formats table below. |
