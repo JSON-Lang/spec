@@ -37,6 +37,53 @@
 <a id="definitions" class="anchor" href="#definitions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Definitions</h2>
 
 <h4>
+<a id="document" class="anchor" href="#document" aria-hidden="true"><span class="octicon octicon-link"></span></a>Document</h4>
+
+<p>A document is by definition is the JSON file's itself and its root. A JSON-Lang root accepts the following properties.</p>
+
+<table>
+<thead>
+<tr>
+<th>Property name</th>
+<th>Is required?</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>encoding</td>
+<td>no</td>
+<td>Encoding code for the whole document content. Default: <code>utf-8</code>.</td>
+</tr>
+<tr>
+<td>strings</td>
+<td>no</td>
+<td>An object containing multiple String objects in a key-value fashion.</td>
+</tr>
+<tr>
+<td>points</td>
+<td>yes</td>
+<td>An object containing Point objects, which accept String objects or JSONPath strings pointing to other String objects in <code>strings</code> value of the document.</td>
+</tr>
+<tr>
+<td>comments</td>
+<td>no</td>
+<td>An array of Comment objects.</td>
+</tr>
+<tr>
+<td>variables</td>
+<td>no</td>
+<td>An object containing multiple Variable objects in a key-value fashion. These variables are validated throughout the document.</td>
+</tr>
+<tr>
+<td>authors</td>
+<td>no</td>
+<td>An array of Author objects.</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
 <a id="strings" class="anchor" href="#strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Strings</h4>
 
 <p>Strings are unique, multilingual text pieces. JSON-Lang does not come with a "source text &gt; translation" relation, but instead, every string contains multilingual content.</p>
@@ -325,6 +372,8 @@ jsonLang.get(<span class="pl-s"><span class="pl-pds">'</span>welcome<span class=
 </tbody>
 </table>
 
+<p><strong>Types and formats list</strong></p>
+
 <table>
 <thead>
 <tr>
@@ -336,37 +385,37 @@ jsonLang.get(<span class="pl-s"><span class="pl-pds">'</span>welcome<span class=
 <tbody>
 <tr>
 <td>array</td>
-<td>array</td>
+<td></td>
 <td>A JSON array.</td>
 </tr>
 <tr>
 <td>boolean</td>
-<td>boolean</td>
+<td></td>
 <td>A JSON boolean.</td>
 </tr>
 <tr>
 <td>integer</td>
-<td>integer</td>
+<td></td>
 <td>A JSON number without a fraction or exponent part.</td>
 </tr>
 <tr>
 <td>number</td>
-<td>number</td>
+<td></td>
 <td>Any JSON number. Number includes integer.</td>
 </tr>
 <tr>
 <td>null</td>
-<td>null</td>
+<td></td>
 <td>The JSON null value.</td>
 </tr>
 <tr>
 <td>object</td>
-<td>object</td>
+<td></td>
 <td>A JSON object.</td>
 </tr>
 <tr>
 <td>string</td>
-<td>string</td>
+<td></td>
 <td>A JSON string.</td>
 </tr>
 <tr>
@@ -377,11 +426,9 @@ jsonLang.get(<span class="pl-s"><span class="pl-pds">'</span>welcome<span class=
 </tbody>
 </table>
 
-<ul>
-<li>This table is not complete. *</li>
-</ul>
+<p><em>This table is not complete.</em></p>
 
-<p>String variable rule:</p>
+<p><strong>Variable rule example in String scope:</strong></p>
 
 <div class="highlight highlight-json"><pre><span class="pl-s"><span class="pl-pds">"</span>hello_morning<span class="pl-pds">"</span></span>: {
     <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
@@ -397,6 +444,288 @@ jsonLang.get(<span class="pl-s"><span class="pl-pds">'</span>welcome<span class=
         <span class="pl-s"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>: {
             <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>string<span class="pl-pds">"</span></span>,
             <span class="pl-s"><span class="pl-pds">"</span>format<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>date-time<span class="pl-pds">"</span></span>
+        }
+    }
+}</pre></div>
+
+<p><strong>Variable rule example in document scope</strong></p>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>encoding<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>utf8<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>variables<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>site_name<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>string<span class="pl-pds">"</span></span>
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>current_year<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>numeric<span class="pl-pds">"</span></span>
+        }
+    }
+}</pre></div>
+
+<h3>
+<a id="points" class="anchor" href="#points" aria-hidden="true"><span class="octicon octicon-link"></span></a>Points</h3>
+
+<p>Points are localization string keys that are public. They are basically String objects opened to the world to be consumed. The difference between a Point and a String is that a Point is a practical representation of where you use a String, while a String does not convey its usage. Points are there to eliminate duplicate strings and an easier reuse of Strings.</p>
+
+<p>Let's say we have two places in our app where we say "Hello!" to a user, one at home page and one after logging in. You would have one <code>hello</code> String and two Points, pointing to these use cases. It would look something like this:</p>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>strings<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello!<span class="pl-pds">"</span></span>
+                },
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>tr-TR<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Merhaba!<span class="pl-pds">"</span></span>
+                }
+            ]
+        }
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>points<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>homepage_subheader<span class="pl-pds">"</span></span>: {<span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/strings/hello<span class="pl-pds">"</span></span>},
+        <span class="pl-s"><span class="pl-pds">"</span>post_login_subheader<span class="pl-pds">"</span></span>: {<span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/strings/hello<span class="pl-pds">"</span></span>},
+    }
+}</pre></div>
+
+<p>Here we have two Points, <code>homepage_subheader</code> and <code>post_login_subheader</code>, pointing to the same <code>hello</code> String. This way, I can still use unique pointers for string locations in my app, yet use the same String without having a duplicate translation. This also lets you change a String in a specific location in your app without affecting another string shown somewhere else.</p>
+
+<p>In smaller use cases, you can directly use a String object in Points instead of putting references to Strings:</p>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>points<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>homepage_subheader<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello!<span class="pl-pds">"</span></span>
+                },
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>tr-TR<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Merhaba!<span class="pl-pds">"</span></span>
+                }
+            ]
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>post_login_subheader<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello!<span class="pl-pds">"</span></span>
+                },
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>tr-TR<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Merhaba!<span class="pl-pds">"</span></span>
+                }
+            ]
+        },
+    }
+}</pre></div>
+
+<p>In this example, it is more clear how Points refering to String objects eliminate duplicate translations and cut the bloat. Now we have to maintain two different strings, which initially have the same content, but used in different places.</p>
+
+<h3>
+<a id="comments" class="anchor" href="#comments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comments</h3>
+
+<p>Comments can be added to the document, a String object or a Translation object.</p>
+
+<table>
+<thead>
+<tr>
+<th>Property name</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>text</td>
+<td>yes</td>
+<td>Comment text</td>
+</tr>
+<tr>
+<td>time</td>
+<td>no</td>
+<td>Comment time as a date value as defined in RFC 3339, section 5.6.</td>
+</tr>
+<tr>
+<td>author</td>
+<td>no</td>
+<td>An author object or a reference with a JSONPath string pointing to an Author object.</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Document-scope example:</strong></p>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>encoding<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>utf8<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>comments<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>This is my comment for the whole document.<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+            }
+        }
+    ]
+}</pre></div>
+
+<p><strong>String-scope example:</strong></p>
+
+<div class="highlight highlight-json"><pre><span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>: {
+    <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello people!<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>alternatives<span class="pl-pds">"</span></span>: [
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello guy!<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+                        <span class="pl-s"><span class="pl-pds">"</span>plural<span class="pl-pds">"</span></span>: {
+                            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello guys!<span class="pl-pds">"</span></span>
+                        }
+                    },
+                    <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+                }
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+            }
+        }
+    ],
+    <span class="pl-s"><span class="pl-pds">"</span>comments<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>This is my comment for this specific string.<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+        }
+    ]
+},</pre></div>
+
+<h3>
+<a id="authors" class="anchor" href="#authors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors</h3>
+
+<p>If you're working in a collaborative environment, you want to keep a track of who worked on a String or a Translation or whose comment is this one. Author objects provide you extra information about the contributor of a document, String or Translation.</p>
+
+<p>A document will accept an array of Author objects, while you can only have one Author per String, Translation or Comment. </p>
+
+<p><em>Once you add an Author in the document scope, you can reference to that Author in your String and Translation objects.</em></p>
+
+<table>
+<thead>
+<tr>
+<th>Property name</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>yes</td>
+<td>Name of the author.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>no</td>
+<td>Email address of the author.</td>
+</tr>
+<tr>
+<td>last_modification</td>
+<td>no</td>
+<td>A date value, as defined in RFC 3339, section 5.6., to specify the last time this Author modified the document.</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Document-scope example:</strong></p>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>encoding<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>utf8<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>authors<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Oytun Tez<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>oytun@motaword.com<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>last_modification<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+        }
+    ]
+}</pre></div>
+
+<p><em>Now you can refer to this Author as <code>#/authors/0</code>. The last number is the index of the Author object in the array.</em></p>
+
+<p><strong>An Author object in a String, Translation and Comment</strong></p>
+
+<div class="highlight highlight-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>encoding<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>utf8<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>authors<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Oytun Tez<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>oytun@motaword.com<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>last_modification<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+        }
+    ],
+    <span class="pl-s"><span class="pl-pds">"</span>strings<span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>translations<span class="pl-pds">"</span></span>: [
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello people!<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>alternatives<span class="pl-pds">"</span></span>: [
+                        {
+                            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello guy!<span class="pl-pds">"</span></span>,
+                            <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+                                <span class="pl-s"><span class="pl-pds">"</span>plural<span class="pl-pds">"</span></span>: {
+                                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Hello guys!<span class="pl-pds">"</span></span>
+                                }
+                            },
+                            <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+                        }
+                    ],
+                    <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                        <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+                    }
+                },
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>language<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>fr-FR<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour l'homme!<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>contexts<span class="pl-pds">"</span></span>: {
+                        <span class="pl-s"><span class="pl-pds">"</span>plural<span class="pl-pds">"</span></span>: {
+                            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Bonjour les gens, en __current_year__!<span class="pl-pds">"</span></span>
+                        }
+                    },
+                    <span class="pl-s"><span class="pl-pds">"</span>comments<span class="pl-pds">"</span></span>: [
+                        {
+                            <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>This is my comment for this specific French translation.<span class="pl-pds">"</span></span>,
+                            <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>,
+                            <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+                            }
+                        } 
+                    ],
+                    <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+                },
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>variables<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>first_name<span class="pl-pds">"</span></span>: {
+                    <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>string<span class="pl-pds">"</span></span>
+                }
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>comments<span class="pl-pds">"</span></span>: [
+                {
+                    <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>This is my comment for this specific string.<span class="pl-pds">"</span></span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                        <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+                    },
+                    <span class="pl-s"><span class="pl-pds">"</span>time<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2015-06-07T15:51:41.297Z<span class="pl-pds">"</span></span>
+                }
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>author<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>$ref<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#/authors/0<span class="pl-pds">"</span></span>
+            }
         }
     }
 }</pre></div>
