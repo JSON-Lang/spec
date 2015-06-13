@@ -2,12 +2,24 @@
 *For JSON Schema definition of the JSON-Lang specification, go to schemas/latest/schema.json file.*
 *Quick introductory examples are below.*
 **This document is to be completed.**
-## 	Introduction
+##  Introduction
 JSON-Lang is a JSON sub-specification designed to provide a global Internationalization exchange file, especially for programming environments rather than documents. Ideally, you would have one unified format for all of your internalization, localization configuration and translations, which you could move between platforms with no touch. If the platform or environment has a JSON-Lang parser, you wouldn't need any modification on the file to use it throughout your system.
 
 You can consider this specification as a highly thin, programming oriented JSON version of XLIFF standard.
-##	Definitions
-#### 	Strings
+##  Definitions
+####    Document
+A document is by definition is the JSON file's itself and its root. A JSON-Lang root accepts the following properties.
+
+| Property name | Is required? | Content  |
+|---------------|--------------|----------|
+| encoding | no | Encoding code for the whole document content. Default: `utf-8`. |
+| strings | no | An object containing multiple String objects in a key-value fashion. |
+| points | yes | An object containing Point objects, which accept String objects or JSONPath strings pointing to other String objects in `strings` value of the document. |
+| comments | no | An array of Comment objects. |
+| variables | no | An object containing multiple Variable objects in a key-value fashion. These variables are validated throughout the document. |
+| authors | no | An array of Author objects. |
+
+####    Strings
 Strings are unique, multilingual text pieces. JSON-Lang does not come with a "source text > translation" relation, but instead, every string contains multilingual content.
 
 Translations of a String is listed as an array under `translations` key. If you have specific variables (that are supposed to be imported from an external source) for a String, you can put them under `variables` key.
@@ -15,13 +27,13 @@ Translations of a String is listed as an array under `translations` key. If you 
 Structure of a String object follows this schema:
 ```
 StringIDValue: {
-	"translations": [TranslationObject],
-	"variables": {
-		VariableIDValue: {
-			"type": VariableTypeValue
-		}
-	},
-	"comments": [CommentObject]
+    "translations": [TranslationObject],
+    "variables": {
+        VariableIDValue: {
+            "type": VariableTypeValue
+        }
+    },
+    "comments": [CommentObject]
 }
 ```
 
@@ -54,7 +66,7 @@ Below is a basic example of a String object.
         {
             "text": "This is my comment for this specific string.",
             "author": {
-            	"$ref": "#/authors/0"
+                "$ref": "#/authors/0"
             },
             "time": "2015-06-07T15:51:41.297Z"
         }
@@ -88,43 +100,43 @@ Basic example:
 Advanced example:
 ```json
 {
-	"language": "fr-FR",
-	"text": "Bonjour l'homme!",
-	"contexts": {
-		"plural": {
-			"text": "Bonjour les gens, en __current_year__!"
-		},
-		"sincere": {
-			"text": "Bonjour mon cher, __first_name__"
-		},
-		"morning": {
-			"$ref": "#/strings/hello_morning"
-		}
-	},
-	"comments": [
-		{
-			"text": "This is my comment for this specific French translation.",
-			"time": "2015-06-07T15:51:41.297Z",
-			"author": {
-				"$ref": "#/authors/0"
-			}
-		}
-	],
-	"time": "2015-06-07T15:51:41.297Z",
-	"author": {
-		"$ref": "#/authors/0"
-	},
-	"alternatives": [
-		{
-			"text": "Hello guy!",
-			"contexts": {
-				"plural": {
-					"text": "Hello guys!"
-				}
-			},
-			"time": "2015-06-07T15:51:41.297Z"
-		}
-	],
+    "language": "fr-FR",
+    "text": "Bonjour l'homme!",
+    "contexts": {
+        "plural": {
+            "text": "Bonjour les gens, en __current_year__!"
+        },
+        "sincere": {
+            "text": "Bonjour mon cher, __first_name__"
+        },
+        "morning": {
+            "$ref": "#/strings/hello_morning"
+        }
+    },
+    "comments": [
+        {
+            "text": "This is my comment for this specific French translation.",
+            "time": "2015-06-07T15:51:41.297Z",
+            "author": {
+                "$ref": "#/authors/0"
+            }
+        }
+    ],
+    "time": "2015-06-07T15:51:41.297Z",
+    "author": {
+        "$ref": "#/authors/0"
+    },
+    "alternatives": [
+        {
+            "text": "Hello guy!",
+            "contexts": {
+                "plural": {
+                    "text": "Hello guys!"
+                }
+            },
+            "time": "2015-06-07T15:51:41.297Z"
+        }
+    ],
 }
 ```
 
@@ -155,19 +167,19 @@ jsonLang.get('welcome', 'female'); // all other contexts are specified by their 
 Example:
 ```json
 "contexts": {
-	"plural": {
-		"text": "Bonjour les gens, en __current_year__!"
-	},
-	"sincere": {
-		"text": "Bonjour mon cher, __first_name__",
+    "plural": {
+        "text": "Bonjour les gens, en __current_year__!"
+    },
+    "sincere": {
+        "text": "Bonjour mon cher, __first_name__",
         "time": "2015-06-07T15:51:41.297Z",
         "author": {
             "$ref": "#/authors/0"
         },
-	},
-	"morning": {
-		"$ref": "#/strings/hello_morning"
-	}
+    },
+    "morning": {
+        "$ref": "#/strings/hello_morning"
+    }
 }
 ```
 
@@ -187,250 +199,501 @@ Variable validation rules accept the following options:
 | type | yes | Type of the variable. See the Variable Types and Formats table below. |
 | format | no | Format of the variable. A variable can be of a type and the format specifies the presentation and format of that type. Example: type = string, format = date-time. See the Variable Types and Formats table below. |
 
+**Types and formats list**
+
 | type | format | description |
 |------|--------|-------------|
-| array | array |	A JSON array. |
-| boolean | boolean |	A JSON boolean. |
-| integer | integer |	A JSON number without a fraction or exponent part. |
-| number | number | 	Any JSON number. Number includes integer. |
-| null | null |	The JSON null value. |
-| object | object |	A JSON object. |
-| string | string |	A JSON string. |
-| string | date-time |	A date time string defined by RFC 3339, section 5.6. |
-* This table is not complete. *
+| array |  |    A JSON array. |
+| boolean |  |  A JSON boolean. |
+| integer |  |  A JSON number without a fraction or exponent part. |
+| number |  |   Any JSON number. Number includes integer. |
+| null |  | The JSON null value. |
+| object |  |   A JSON object. |
+| string |  |   A JSON string. |
+| string | date-time |  A date time string defined by RFC 3339, section 5.6. |
 
-String variable rule:
+*This table is not complete.*
+
+**Variable rule example in String scope:**
 ```json
 "hello_morning": {
-	"translations": [
-		{
-			"language": "en-US",
-			"text": "Good morning, __first_name! Today is __date__."
-		}
-	],
-	"variables": {
-		"first_name": {
-			"type": "string"
-		},
-		"date": {
-			"type": "string",
-			"format": "date-time"
-		}
-	}
+    "translations": [
+        {
+            "language": "en-US",
+            "text": "Good morning, __first_name! Today is __date__."
+        }
+    ],
+    "variables": {
+        "first_name": {
+            "type": "string"
+        },
+        "date": {
+            "type": "string",
+            "format": "date-time"
+        }
+    }
 }
 ```
 
-##	Behaviors
-###	Points and Strings
-###	Variables
-###	Contexts
-###	Meta Data
-## 	Examples
+**Variable rule example in document scope**
+```json
+{
+    "encoding": "utf8",
+    "variables": {
+        "site_name": {
+            "type": "string"
+        },
+        "current_year": {
+            "type": "numeric"
+        }
+    }
+}
+```
+
+
+### Points
+Points are localization string keys that are public. They are basically String objects opened to the world to be consumed. The difference between a Point and a String is that a Point is a practical representation of where you use a String, while a String does not convey its usage. Points are there to eliminate duplicate strings and an easier reuse of Strings.
+
+Let's say we have two places in our app where we say "Hello!" to a user, one at home page and one after logging in. You would have one `hello` String and two Points, pointing to these use cases. It would look something like this:
+
+```json
+{
+    "strings": {
+        "hello": {
+            "translations": [
+                {
+                    "language": "en-US",
+                    "text": "Hello!"
+                },
+                {
+                    "language": "tr-TR",
+                    "text": "Merhaba!"
+                }
+            ]
+        }
+    },
+    "points": {
+        "homepage_subheader": {"$ref": "#/strings/hello"},
+        "post_login_subheader": {"$ref": "#/strings/hello"},
+    }
+}
+```
+
+Here we have two Points, `homepage_subheader` and `post_login_subheader`, pointing to the same `hello` String. This way, I can still use unique pointers for string locations in my app, yet use the same String without having a duplicate translation. This also lets you change a String in a specific location in your app without affecting another string shown somewhere else.
+
+In smaller use cases, you can directly use a String object in Points instead of putting references to Strings:
+
+```json
+{
+    "points": {
+        "homepage_subheader": {
+            "translations": [
+                {
+                    "language": "en-US",
+                    "text": "Hello!"
+                },
+                {
+                    "language": "tr-TR",
+                    "text": "Merhaba!"
+                }
+            ]
+        },
+        "post_login_subheader": {
+            "translations": [
+                {
+                    "language": "en-US",
+                    "text": "Hello!"
+                },
+                {
+                    "language": "tr-TR",
+                    "text": "Merhaba!"
+                }
+            ]
+        },
+    }
+}
+```
+
+In this example, it is more clear how Points refering to String objects eliminate duplicate translations and cut the bloat. Now we have to maintain two different strings, which initially have the same content, but used in different places.
+
+
+
+### Comments
+Comments can be added to the document, a String object or a Translation object.
+
+| Property name | Required | Description |
+|---------------|----------|-------------|
+| text | yes | Comment text |
+| time | no | Comment time as a date value as defined in RFC 3339, section 5.6. |
+| author | no | An author object or a reference with a JSONPath string pointing to an Author object. |
+
+**Document-scope example:**
+```json
+{
+    "encoding": "utf8",
+    "comments": [
+        {
+            "text": "This is my comment for the whole document.",
+            "time": "2015-06-07T15:51:41.297Z",
+            "author": {
+                "$ref": "#/authors/0"
+            }
+        }
+    ]
+}
+```
+
+**String-scope example:**
+```json
+"hello": {
+    "translations": [
+        {
+            "language": "en-US",
+            "text": "Hello people!",
+            "alternatives": [
+                {
+                    "text": "Hello guy!",
+                    "contexts": {
+                        "plural": {
+                            "text": "Hello guys!"
+                        }
+                    },
+                    "time": "2015-06-07T15:51:41.297Z"
+                }
+            ],
+            "author": {
+                "$ref": "#/authors/0"
+            }
+        }
+    ],
+    "comments": [
+        {
+            "text": "This is my comment for this specific string.",
+            "author": {
+                "$ref": "#/authors/0"
+            },
+            "time": "2015-06-07T15:51:41.297Z"
+        }
+    ]
+},
+```
+
+### Authors
+If you're working in a collaborative environment, you want to keep a track of who worked on a String or a Translation or whose comment is this one. Author objects provide you extra information about the contributor of a document, String or Translation.
+
+A document will accept an array of Author objects, while you can only have one Author per String, Translation or Comment. 
+
+*Once you add an Author in the document scope, you can reference to that Author in your String and Translation objects.*
+
+| Property name | Required | Description |
+|---------------|----------|-------------|
+| name | yes | Name of the author. |
+| email | no | Email address of the author. |
+| last_modification | no | A date value, as defined in RFC 3339, section 5.6., to specify the last time this Author modified the document. |
+
+**Document-scope example:**
+```json
+{
+    "encoding": "utf8",
+    "authors": [
+        {
+            "name": "Oytun Tez",
+            "email": "oytun@motaword.com",
+            "last_modification": "2015-06-07T15:51:41.297Z"
+        }
+    ]
+}
+```
+
+*Now you can refer to this Author as `#/authors/0`. The last number is the index of the Author object in the array.*
+
+**An Author object in a String, Translation and Comment**
+```json
+{
+    "encoding": "utf8",
+    "authors": [
+        {
+            "name": "Oytun Tez",
+            "email": "oytun@motaword.com",
+            "last_modification": "2015-06-07T15:51:41.297Z"
+        }
+    ],
+    "strings": {
+        "hello": {
+            "translations": [
+                {
+                    "language": "en-US",
+                    "text": "Hello people!",
+                    "alternatives": [
+                        {
+                            "text": "Hello guy!",
+                            "contexts": {
+                                "plural": {
+                                    "text": "Hello guys!"
+                                }
+                            },
+                            "time": "2015-06-07T15:51:41.297Z"
+                        }
+                    ],
+                    "author": {
+                        "$ref": "#/authors/0"
+                    }
+                },
+                {
+                    "language": "fr-FR",
+                    "text": "Bonjour l'homme!",
+                    "contexts": {
+                        "plural": {
+                            "text": "Bonjour les gens, en __current_year__!"
+                        }
+                    },
+                    "comments": [
+                        {
+                            "text": "This is my comment for this specific French translation.",
+                            "time": "2015-06-07T15:51:41.297Z",
+                            "author": {
+                                "$ref": "#/authors/0"
+                            }
+                        } 
+                    ],
+                    "time": "2015-06-07T15:51:41.297Z"
+                },
+            ],
+            "variables": {
+                "first_name": {
+                    "type": "string"
+                }
+            },
+            "comments": [
+                {
+                    "text": "This is my comment for this specific string.",
+                    "author": {
+                        "$ref": "#/authors/0"
+                    },
+                    "time": "2015-06-07T15:51:41.297Z"
+                }
+            ],
+            "author": {
+                "$ref": "#/authors/0"
+            }
+        }
+    }
+}
+```
+
+
+
+##  Behaviors
+### Points and Strings
+### Variables
+### Contexts
+### Meta Data
+##  Examples
 1. Basic language file definition
 ```json
 {
-	"encoding": "utf8",
-	"strings": {
-		"welcome": {
-			"translations": [
-				{
-					"language": "en-US",
-					"text": "Welcome home, __first_name__!"
-				},
-				{
-					"language": "tr-TR",
-					"text": "Tekrar hoşgeldin, __first_name__!"
-				}
-			],
-			"variables": {
-				"first_name": {
-					"type": "string"
-				}
-			}
-		},
-		"success": {
-			"translations": [
-				{
-					"language": "en-US",
-					"text": "Congratulations, everything went well!"
-				},
-				{
-					"language": "tr-TR",
-					"text": "Tebrikler, her şey yolunda!"
-				}
-			]
-		}
-	},
-	"points": {
-		"header_login_success": {"$ref": "#/strings/welcome"},
-		"login_welcome_subheader": [
-			{
-				"language": "en-US",
-				"text": "Hello cats!"
-			},
-			{
-				"language": "fr-FR",
-				"text": "Bonjour la chat!",
-				"contexts": {
-					"plural": "Bonjour les chats!"
-				}
-			}
-		],
-		"registration": {
-			"success": {"$ref": "#/strings/success"}
-		}
-	}
+    "encoding": "utf8",
+    "strings": {
+        "welcome": {
+            "translations": [
+                {
+                    "language": "en-US",
+                    "text": "Welcome home, __first_name__!"
+                },
+                {
+                    "language": "tr-TR",
+                    "text": "Tekrar hoşgeldin, __first_name__!"
+                }
+            ],
+            "variables": {
+                "first_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "success": {
+            "translations": [
+                {
+                    "language": "en-US",
+                    "text": "Congratulations, everything went well!"
+                },
+                {
+                    "language": "tr-TR",
+                    "text": "Tebrikler, her şey yolunda!"
+                }
+            ]
+        }
+    },
+    "points": {
+        "header_login_success": {"$ref": "#/strings/welcome"},
+        "login_welcome_subheader": [
+            {
+                "language": "en-US",
+                "text": "Hello cats!"
+            },
+            {
+                "language": "fr-FR",
+                "text": "Bonjour la chat!",
+                "contexts": {
+                    "plural": "Bonjour les chats!"
+                }
+            }
+        ],
+        "registration": {
+            "success": {"$ref": "#/strings/success"}
+        }
+    }
 }
 ```
 2. Advanced language file definition
 ```json
 {
-	"encoding": "utf8",
-	"comments": [
-		{
-			"text": "This is my comment for the whole document.",
-			"time": "2015-06-07T15:51:41.297Z",
-			"author": {
-				"$ref": "#/authors/0"
-			}
-		}
-	],
-	"variables": {
-		"site_name": {
-			"type": "string"
-		},
-		"current_year": {
-			"type": "integer"
-		}
-	},
-	"authors": [
-		{
-			"name": "Oytun Tez",
-			"email": "oytun@motaword.com",
-			"last_modification": "2015-06-07T15:51:41.297Z"
-		}
-	],
-	"languages": {
-		"source": "en-US",
-		"targets": [
-			"en-US", "fr-FR", "tr-TR"
-		]
-	},
-	"strings": {
-		"hello": {
-			"translations": [
-				{
-					"language": "en-US",
-					"text": "Hello people!",
-					"alternatives": [
-						{
-							"text": "Hello guy!",
-							"contexts": {
-								"plural": {
-									"text": "Hello guys!"
-								}
-							},
-							"time": "2015-06-07T15:51:41.297Z"
-						}
-					],
-					"author": {
-						"$ref": "#/authors/0"
-					}
-				},
-				{
-					"language": "fr-FR",
-					"text": "Bonjour l'homme!",
-					"contexts": {
-						"plural": {
-							"text": "Bonjour les gens, en __current_year__!"
-						}
-					},
-					"comments": [
-						{
-							"text": "This is my comment for this specific French translation.",
-							"time": "2015-06-07T15:51:41.297Z",
-							"author": {
-								"$ref": "#/authors/0"
-							}
-						}
-					],
-					"time": "2015-06-07T15:51:41.297Z"
-				},
-				{
-					"language": "tr-TR",
-					"status": "final",
-					"text": "Merhaba __first_name__!",
-					"contexts": {
-						"sincere": {
-							"text": "Selam __first_name__"
-						},
-						"morning": {
-							"$ref": "#/strings/hello_morning"
-						}
-					}
-				}
-			],
-			"variables": {
-				"first_name": {
-					"type": "string"
-				}
-			},
-			"comments": [
-				{
-					"text": "This is my comment for this specific string.",
-					"author": {
-						"$ref": "#/authors/0"
-					},
-					"time": "2015-06-07T15:51:41.297Z"
-				}
-			]
-		},
-		"hello_morning": [
-			{
-				"language": "tr-TR",
-				"text": "Gunaydin insan!",
-				"contexts": {
-					"plural": {
-						"text": "Gunaydin insanlar!"
-					}
-				}
-			}
-		],
-		"success": [
-			{
-				"language": "en-US",
-				"text": "Congratulations! Thanks for registering."
-			}
-		]
-	},
-	"points": {
-		"login_welcome_header": {
-			"$ref": { 
-				"$ref": "#/strings/hello"
-			}
-		},
-		"login_welcome_subheader": [
-			{
-				"language": "en-US",
-				"text": "Hello cats!"
-			},
-			{
-				"language": "fr-FR",
-				"text": "Bonjour la chat!",
-				"contexts": {
-					"text": "Bonjour les chats!"
-				}
-			}
-		],
-		"registration": {
-			"success": {
-				"$ref": "#/strings/success"
-			}
-		}
-	}
+    "encoding": "utf8",
+    "comments": [
+        {
+            "text": "This is my comment for the whole document.",
+            "time": "2015-06-07T15:51:41.297Z",
+            "author": {
+                "$ref": "#/authors/0"
+            }
+        }
+    ],
+    "variables": {
+        "site_name": {
+            "type": "string"
+        },
+        "current_year": {
+            "type": "integer"
+        }
+    },
+    "authors": [
+        {
+            "name": "Oytun Tez",
+            "email": "oytun@motaword.com",
+            "last_modification": "2015-06-07T15:51:41.297Z"
+        }
+    ],
+    "languages": {
+        "source": "en-US",
+        "targets": [
+            "en-US", "fr-FR", "tr-TR"
+        ]
+    },
+    "strings": {
+        "hello": {
+            "translations": [
+                {
+                    "language": "en-US",
+                    "text": "Hello people!",
+                    "alternatives": [
+                        {
+                            "text": "Hello guy!",
+                            "contexts": {
+                                "plural": {
+                                    "text": "Hello guys!"
+                                }
+                            },
+                            "time": "2015-06-07T15:51:41.297Z"
+                        }
+                    ],
+                    "author": {
+                        "$ref": "#/authors/0"
+                    }
+                },
+                {
+                    "language": "fr-FR",
+                    "text": "Bonjour l'homme!",
+                    "contexts": {
+                        "plural": {
+                            "text": "Bonjour les gens, en __current_year__!"
+                        }
+                    },
+                    "comments": [
+                        {
+                            "text": "This is my comment for this specific French translation.",
+                            "time": "2015-06-07T15:51:41.297Z",
+                            "author": {
+                                "$ref": "#/authors/0"
+                            }
+                        }
+                    ],
+                    "time": "2015-06-07T15:51:41.297Z"
+                },
+                {
+                    "language": "tr-TR",
+                    "status": "final",
+                    "text": "Merhaba __first_name__!",
+                    "contexts": {
+                        "sincere": {
+                            "text": "Selam __first_name__"
+                        },
+                        "morning": {
+                            "$ref": "#/strings/hello_morning"
+                        }
+                    }
+                }
+            ],
+            "variables": {
+                "first_name": {
+                    "type": "string"
+                }
+            },
+            "comments": [
+                {
+                    "text": "This is my comment for this specific string.",
+                    "author": {
+                        "$ref": "#/authors/0"
+                    },
+                    "time": "2015-06-07T15:51:41.297Z"
+                }
+            ]
+        },
+        "hello_morning": [
+            {
+                "language": "tr-TR",
+                "text": "Gunaydin insan!",
+                "contexts": {
+                    "plural": {
+                        "text": "Gunaydin insanlar!"
+                    }
+                }
+            }
+        ],
+        "success": [
+            {
+                "language": "en-US",
+                "text": "Congratulations! Thanks for registering."
+            }
+        ]
+    },
+    "points": {
+        "login_welcome_header": {
+            "$ref": { 
+                "$ref": "#/strings/hello"
+            }
+        },
+        "login_welcome_subheader": [
+            {
+                "language": "en-US",
+                "text": "Hello cats!"
+            },
+            {
+                "language": "fr-FR",
+                "text": "Bonjour la chat!",
+                "contexts": {
+                    "text": "Bonjour les chats!"
+                }
+            }
+        ],
+        "registration": {
+            "success": {
+                "$ref": "#/strings/success"
+            }
+        }
+    }
 }
 ```
-## 	Tools
-## 	Support
-##	Contributing
-##	License
+##  Tools
+##  Support
+##  Contributing
+##  License

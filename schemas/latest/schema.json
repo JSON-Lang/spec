@@ -13,6 +13,12 @@
                 "$ref": "#/definitions/Comment"
             }
         },
+        "authors": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Author"
+            }
+        },
         "variables": {
             "type": "object",
             "patternProperties": {
@@ -190,6 +196,12 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Comment"
+                    }
+                },
+                "author": {
+                    "type": "object",
+                    "items": {
+                        "$ref": "#/definitions/Author"
                     }
                 }
             },
