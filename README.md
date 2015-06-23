@@ -1,7 +1,5 @@
 # JSON-Lang Specification
-*For JSON Schema definition of the JSON-Lang specification, go to schemas/latest/schema.json file.*
-*Quick introductory examples are below.*
-**This document is to be completed.**
+*For JSON Schema definition of JSON-Lang specification, go to [schema.json](https://github.com/JSON-Lang/spec/blob/draft/schemas/latest/schema.json) file.*
 ##  Introduction
 JSON-Lang is a JSON sub-specification designed to provide a global Internationalization exchange file, especially for programming environments rather than documents. Ideally, you would have one unified format for all of your internalization, localization configuration and translations, which you could move between platforms with no touch. If the platform or environment has a JSON-Lang parser, you wouldn't need any modification on the file to use it throughout your system.
 
