@@ -4,6 +4,31 @@
 JSON-Lang is a JSON sub-specification designed to provide a global Internationalization exchange file, especially for programming environments rather than documents. Ideally, you would have one unified format for all of your internalization, localization configuration and translations, which you could move between platforms with no touch. If the platform or environment has a JSON-Lang parser, you wouldn't need any modification on the file to use it throughout your system.
 
 You can consider this specification as a highly thin, programming oriented JSON version of XLIFF standard.
+
+- [JSON-Lang Specification](#json-lang-specification)
+  * [Introduction](#introduction)
+  * [Definitions](#definitions)
+      - [Document](#document)
+      - [Strings](#strings)
+      - [Translations](#translations)
+      - [Language codes](#language-codes)
+      - [Contexts](#contexts)
+      - [Variables](#variables)
+    + [Points](#points)
+    + [Comments](#comments)
+    + [Authors](#authors)
+  * [Behaviors](#behaviors)
+    + [Points and Strings](#points-and-strings)
+    + [Variables](#variables-1)
+    + [Contexts](#contexts-1)
+    + [Meta Data](#meta-data)
+  * [Examples](#examples)
+  * [Tools](#tools)
+  * [Support](#support)
+  * [Contributing](#contributing)
+  * [License](#license)
+
+
 ##  Definitions
 ####    Document
 A document is by definition is the JSON file's itself and its root. A JSON-Lang root accepts the following properties.
